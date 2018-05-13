@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">SampleLogin</string>
+    <string name="join_name">Join</string>
+    <string name="id">ID</string>
+    <string name="pwd">PASSWORD</string>
+    <string name="pwd_confirm">PASSWORD CONFIRM</string>
+    <string name="email">EMAIL</string>
+    <string name="ok">OK</string>
+    <string name="done">Done</string>
+    <string name="clear">Clear Data</string>
+    <string name="cancel">Cancel</string>
+    <string name="error_join_field_empty">Please enter all.</string>
+    <string name="error_do_not_same_pwd">Please check Password.</string>
+    <string name="error_discorrent_email">Please check Email.</string>
+    <string name="error_fail_login">Please check ID / Password.</string>
+    <string name="login_detail_title">Your ID</string>
+    <string name="txtInputInfoID">최소 8자 입니다</string>
+</resources>

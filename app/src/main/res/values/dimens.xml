@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="txt_join_title_size">15sp</dimen>
+    <dimen name="txt_join_title_width">80dp</dimen>
+    <dimen name="txt_big">25dp</dimen>
+</resources>
