@@ -3,10 +3,11 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
-    android:gravity="center_vertical"
+    android:gravity="center_horizontal"
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:layout_marginTop="80dp"
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <TextView
@@ -20,6 +21,7 @@
             android:id="@+id/editID"
             android:layout_width="0dp"
             android:maxLines="1"
+            android:maxLength="20"
             android:inputType="text"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
@@ -27,6 +29,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:visibility="gone"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/layoutInfoInputID"
         android:layout_height="wrap_content">
         <ImageView
@@ -37,6 +40,7 @@
         <TextView
             android:id="@+id/txtInfoInputID"
             android:layout_width="wrap_content"
+            android:textColor="@android:color/holo_red_light"
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:textSize="@dimen/txt_join_title_size"
@@ -45,7 +49,7 @@
 
 
     <LinearLayout
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <TextView
@@ -59,13 +63,34 @@
             android:id="@+id/editPWD"
             android:layout_width="0dp"
             android:maxLines="1"
+            android:maxLength="20"
             android:inputType="textPassword"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/layoutInfoInputPWD"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:background="@drawable/error"
+            android:layout_width="15dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="15dp" />
+        <TextView
+            android:id="@+id/txtInfoInputPWD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_light"
+            android:maxLines="1"
+            android:textSize="@dimen/txt_join_title_size"
+            />
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <TextView
@@ -78,14 +103,35 @@
         <EditText
             android:id="@+id/editPWDConfirm"
             android:layout_width="0dp"
+            android:maxLength="20"
             android:inputType="textPassword"
             android:maxLines="1"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/layoutInfoInputRePWD"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:background="@drawable/error"
+            android:layout_width="15dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="15dp" />
+        <TextView
+            android:id="@+id/txtInfoInputRePWD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="@dimen/txt_join_title_size"
+            />
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <TextView
@@ -103,9 +149,30 @@
             android:maxLines="1"
             android:layout_weight="1"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/layoutInfoInputEmail"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:background="@drawable/error"
+            android:layout_width="15dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="15dp" />
+        <TextView
+            android:id="@+id/txtInfoInputEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_light"
+            android:maxLines="1"
+            android:textSize="@dimen/txt_join_title_size"
+            />
+    </LinearLayout>
+
     <Button
         android:id="@+id/btnDone"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="@string/done"/>
