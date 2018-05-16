@@ -15,8 +15,11 @@ import com.kcs.sampleLogin.Utils
 import com.kcs.sampleLogin.main.MainActivity
 import kotlinx.android.synthetic.main.activity_join.*
 import com.jakewharton.rxbinding2.widget.*
+import rx.Observable
+import java.util.*
 import java.util.regex.Pattern
-
+import rx.Observer
+import rx.Subscriber
 /**
  * Created by kcs on 2018. 4. 28..
  */
@@ -25,6 +28,9 @@ class JoinActivity : AppCompatActivity() {
     private lateinit var inputDataField : Array<EditText>
     private lateinit var inputInfoLayoutField : Array<LinearLayout>
     private lateinit var inputInfoField : Array<TextView>
+    private lateinit var inputInfoMessage : Array<String>
+    private var isInputCorrentData : Array<Boolean> = arrayOf(false, false, false, false)
+    private var isSuccessInputData = false
     //패스워드 정규식
     // 대문자,소문자, 숫자 또는 특수문자
 //    private val passwordRules = "^(?=.*[a-zA-Z])((?=.*\\d)|(?=.*\\W)).{6,20}\$"
@@ -46,9 +52,9 @@ class JoinActivity : AppCompatActivity() {
         inputDataField = arrayOf(editID, editPWD, editPWDConfirm, editEmail)
         inputInfoLayoutField = arrayOf(layoutInfoInputID, layoutInfoInputPWD, layoutInfoInputRePWD, layoutInfoInputEmail)
         inputInfoField = arrayOf(txtInfoInputID, txtInfoInputPWD, txtInfoInputRePWD, txtInfoInputEmail)
+        inputInfoMessage = arrayOf(getString(R.string.txtInputInfoID), getString(R.string.txtInputInfoPWD), getString(R.string.txtInputInfoRePWD), getString(R.string.error_discorrent_email))
+
         typingListener()
-
-
     }
 
     private fun setListener(){
@@ -93,41 +99,66 @@ class JoinActivity : AppCompatActivity() {
     private fun typingListener(){
         // ID
         RxTextView.textChanges(inputDataField[0])
-                .map { t -> t.length in 1 .. 4 }
+                .map { t -> t.length in 1 .. 7 }
                 .subscribe({ it ->
-                    if (it){
-                        layoutInfoInputID.visibility = View.VISIBLE
-                        txtInfoInputID.text = getString(R.string.txtInputInfoID)
-                    }else{
-                        layoutInfoInputID.visibility = View.GONE
-                    }
+                    reactiveInputTextViewData(0, !it)
                 })
 
         // Password
-        for (i in 1 ..2) {
-            RxTextView.textChanges(inputDataField[i])
-                    .map { t -> t.isEmpty() ||  Pattern.matches(passwordRules, t)}
-                    .subscribe({ it ->
-                        if (it){
-                            inputInfoLayoutField[i].visibility = View.GONE
-                        }else{
-                            inputInfoLayoutField[i].visibility = View.VISIBLE
-                            inputInfoField[i].text = getString(R.string.txtInputInfoPWD)
-                        }
-                    })
-        }
+        RxTextView.textChanges(inputDataField[1])
+                .map { t -> t.isEmpty() ||  Pattern.matches(passwordRules, t)}
+                .subscribe({ it ->
+                    reactiveInputTextViewData(1, it)
+        })
+
+        // RePassword
+        RxTextView.textChanges(inputDataField[2])
+                .map { t -> t.isEmpty() || inputDataField[1].text.toString() == inputDataField[2].text.toString()}
+                .subscribe({ it ->
+                    reactiveInputTextViewData(2, it)
+                })
+
 
         //Email
         RxTextView.textChanges(inputDataField[3])
                 .map { t -> t.isEmpty() || Pattern.matches(emailRules, t) }
                 .subscribe({
-                    if (it){
-                        inputInfoLayoutField[3].visibility = View.GONE
-                }else{
-                        inputInfoLayoutField[3].visibility = View.VISIBLE
-                        inputInfoField[3].text = getString(R.string.txtInputInfoEmail)
-                }})
+                    reactiveInputTextViewData(3, it)
+                })
 
+
+//        val checkObservable : Observer<Boolean> = Observable.create({
+//            t1 ->  t1.onNext(isSuccessInputData)
+//            t1.onCompleted()
+//        })
+    }
+
+    /**
+     * 올바른 회원정보를 입력 받았는지 체크
+     */
+    private fun reactiveCheckCorrentData(){
+        for (check in isInputCorrentData){
+            if (!check){
+                isSuccessInputData = false
+                return
+            }
+        }
+        isSuccessInputData = true
+    }
+
+    /**
+     * ReActive 로 입력 들어오는 데이터에 대한 결과를 UI 로 표시합니다
+     */
+    private fun reactiveInputTextViewData(indexPath: Int, it: Boolean){
+        isInputCorrentData[indexPath] = it
+
+        if (it){
+            inputInfoLayoutField[indexPath].visibility = View.GONE
+            reactiveCheckCorrentData()
+        }else{
+            inputInfoLayoutField[indexPath].visibility = View.VISIBLE
+            inputInfoField[indexPath].text = inputInfoMessage[indexPath]
+        }
     }
 
     companion object {
