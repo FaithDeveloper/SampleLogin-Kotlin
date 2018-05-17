@@ -15,22 +15,22 @@ import com.kcs.sampleLogin.Utils
 import com.kcs.sampleLogin.main.MainActivity
 import kotlinx.android.synthetic.main.activity_join.*
 import com.jakewharton.rxbinding2.widget.*
+import io.reactivex.SingleObserver
 import rx.Observable
-import java.util.*
 import java.util.regex.Pattern
-import rx.Observer
-import rx.Subscriber
+
 /**
  * Created by kcs on 2018. 4. 28..
  */
 class JoinActivity : AppCompatActivity() {
 
-    private lateinit var inputDataField : Array<EditText>
-    private lateinit var inputInfoLayoutField : Array<LinearLayout>
-    private lateinit var inputInfoField : Array<TextView>
-    private lateinit var inputInfoMessage : Array<String>
-    private var isInputCorrentData : Array<Boolean> = arrayOf(false, false, false, false)
+    private lateinit var inputDataField: Array<EditText>
+    private lateinit var inputInfoLayoutField: Array<LinearLayout>
+    private lateinit var inputInfoField: Array<TextView>
+    private lateinit var inputInfoMessage: Array<String>
+    private var isInputCorrectData: Array<Boolean> = arrayOf(false, false, false, false)
     private var isSuccessInputData = false
+
     //패스워드 정규식
     // 대문자,소문자, 숫자 또는 특수문자
 //    private val passwordRules = "^(?=.*[a-zA-Z])((?=.*\\d)|(?=.*\\W)).{6,20}\$"
@@ -48,7 +48,7 @@ class JoinActivity : AppCompatActivity() {
         setListener()
     }
 
-    private fun init(){
+    private fun init() {
         inputDataField = arrayOf(editID, editPWD, editPWDConfirm, editEmail)
         inputInfoLayoutField = arrayOf(layoutInfoInputID, layoutInfoInputPWD, layoutInfoInputRePWD, layoutInfoInputEmail)
         inputInfoField = arrayOf(txtInfoInputID, txtInfoInputPWD, txtInfoInputRePWD, txtInfoInputEmail)
@@ -57,24 +57,24 @@ class JoinActivity : AppCompatActivity() {
         typingListener()
     }
 
-    private fun setListener(){
+    private fun setListener() {
         btnDone.setOnClickListener {
-            if(checkEmpty()){
+            if (checkEmpty()) {
                 Toast.makeText(this@JoinActivity, getString(R.string.error_join_field_empty), Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
 //                val intent = Intent(this@JoinActivity, MainActivity::class.java)
 //                startActivity(intent)
 
-                if(inputDataField[1].text.toString() == inputDataField[2].text.toString()) {
+                if (inputDataField[1].text.toString() == inputDataField[2].text.toString()) {
                     Utils.setPWDData(this@JoinActivity, inputDataField[1].text.toString())
-                }else{
+                } else {
                     Toast.makeText(this@JoinActivity, getString(R.string.error_do_not_same_pwd), Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
-                if(inputDataField[3].text.toString().contains("@")){
+                if (inputDataField[3].text.toString().contains("@")) {
                     Utils.setEMAILData(this@JoinActivity, inputDataField[3].text.toString())
-                }else{
+                } else {
                     Toast.makeText(this@JoinActivity, getString(R.string.error_discorrent_email), Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
@@ -87,33 +87,33 @@ class JoinActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkEmpty() : Boolean{
-        for(dataField in inputDataField){
-            if (dataField.text.toString().isEmpty()){
+    private fun checkEmpty(): Boolean {
+        for (dataField in inputDataField) {
+            if (dataField.text.toString().isEmpty()) {
                 return true
             }
         }
         return false
     }
 
-    private fun typingListener(){
+    private fun typingListener() {
         // ID
         RxTextView.textChanges(inputDataField[0])
-                .map { t -> t.length in 1 .. 7 }
+                .map { t -> t.length in 1..7 }
                 .subscribe({ it ->
                     reactiveInputTextViewData(0, !it)
                 })
 
         // Password
         RxTextView.textChanges(inputDataField[1])
-                .map { t -> t.isEmpty() ||  Pattern.matches(passwordRules, t)}
+                .map { t -> t.isEmpty() || Pattern.matches(passwordRules, t) }
                 .subscribe({ it ->
                     reactiveInputTextViewData(1, it)
-        })
+                })
 
         // RePassword
         RxTextView.textChanges(inputDataField[2])
-                .map { t -> t.isEmpty() || inputDataField[1].text.toString() == inputDataField[2].text.toString()}
+                .map { t -> t.isEmpty() || inputDataField[1].text.toString() == inputDataField[2].text.toString() }
                 .subscribe({ it ->
                     reactiveInputTextViewData(2, it)
                 })
@@ -126,19 +126,28 @@ class JoinActivity : AppCompatActivity() {
                     reactiveInputTextViewData(3, it)
                 })
 
-
-//        val checkObservable : Observer<Boolean> = Observable.create({
-//            t1 ->  t1.onNext(isSuccessInputData)
-//            t1.onCompleted()
-//        })
+        
+        Observable.just(isSuccessInputData)
+                .subscribe({ it ->
+                    if (it) {
+                        btnDone.setBackgroundColor(resources.getColor(R.color.enableButton))
+                        btnDone.setTextColor(resources.getColor(R.color.white))
+                        btnDone.isEnabled = true
+                    } else {
+                        btnDone.setBackgroundColor(resources.getColor(R.color.disableButton))
+                        btnDone.setTextColor(resources.getColor(R.color.gray))
+                        btnDone.isEnabled = false
+                    }
+                }
+                )
     }
 
     /**
      * 올바른 회원정보를 입력 받았는지 체크
      */
-    private fun reactiveCheckCorrentData(){
-        for (check in isInputCorrentData){
-            if (!check){
+    private fun reactiveCheckCorrectData() {
+        for (check in isInputCorrectData) {
+            if (!check) {
                 isSuccessInputData = false
                 return
             }
@@ -149,13 +158,17 @@ class JoinActivity : AppCompatActivity() {
     /**
      * ReActive 로 입력 들어오는 데이터에 대한 결과를 UI 로 표시합니다
      */
-    private fun reactiveInputTextViewData(indexPath: Int, it: Boolean){
-        isInputCorrentData[indexPath] = it
-
-        if (it){
-            inputInfoLayoutField[indexPath].visibility = View.GONE
-            reactiveCheckCorrentData()
+    private fun reactiveInputTextViewData(indexPath: Int, it: Boolean) {
+        if(!inputDataField[indexPath].text.toString().isEmpty()){
+            isInputCorrectData[indexPath] = it
         }else{
+            isInputCorrectData[indexPath] = false
+        }
+
+        if (it) {
+            inputInfoLayoutField[indexPath].visibility = View.GONE
+            reactiveCheckCorrectData()
+        } else {
             inputInfoLayoutField[indexPath].visibility = View.VISIBLE
             inputInfoField[indexPath].text = inputInfoMessage[indexPath]
         }
