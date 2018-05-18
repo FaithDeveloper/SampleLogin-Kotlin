@@ -29,7 +29,6 @@ class JoinActivity : AppCompatActivity() {
     private lateinit var inputInfoField: Array<TextView>
     private lateinit var inputInfoMessage: Array<String>
     private var isInputCorrectData: Array<Boolean> = arrayOf(false, false, false, false)
-    private var isSuccessInputData = false
 
     //패스워드 정규식
     // 대문자,소문자, 숫자 또는 특수문자
@@ -125,21 +124,6 @@ class JoinActivity : AppCompatActivity() {
                 .subscribe({
                     reactiveInputTextViewData(3, it)
                 })
-
-        
-        Observable.just(isSuccessInputData)
-                .subscribe({ it ->
-                    if (it) {
-                        btnDone.setBackgroundColor(resources.getColor(R.color.enableButton))
-                        btnDone.setTextColor(resources.getColor(R.color.white))
-                        btnDone.isEnabled = true
-                    } else {
-                        btnDone.setBackgroundColor(resources.getColor(R.color.disableButton))
-                        btnDone.setTextColor(resources.getColor(R.color.gray))
-                        btnDone.isEnabled = false
-                    }
-                }
-                )
     }
 
     /**
@@ -148,11 +132,15 @@ class JoinActivity : AppCompatActivity() {
     private fun reactiveCheckCorrectData() {
         for (check in isInputCorrectData) {
             if (!check) {
-                isSuccessInputData = false
+                btnDone.setBackgroundColor(resources.getColor(R.color.disableButton))
+                btnDone.setTextColor(resources.getColor(R.color.gray))
+                btnDone.isEnabled = false
                 return
             }
         }
-        isSuccessInputData = true
+        btnDone.setBackgroundColor(resources.getColor(R.color.enableButton))
+        btnDone.setTextColor(resources.getColor(R.color.white))
+        btnDone.isEnabled = true
     }
 
     /**
@@ -167,11 +155,12 @@ class JoinActivity : AppCompatActivity() {
 
         if (it) {
             inputInfoLayoutField[indexPath].visibility = View.GONE
-            reactiveCheckCorrectData()
         } else {
             inputInfoLayoutField[indexPath].visibility = View.VISIBLE
             inputInfoField[indexPath].text = inputInfoMessage[indexPath]
         }
+
+        reactiveCheckCorrectData()
     }
 
     companion object {
