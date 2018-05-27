@@ -6,6 +6,12 @@ import io.realm.RealmModel
 
 /**
  * Created by kcs on 2018. 5. 27..
+ *
+ * ref :
+ * https://github.com/boarderYuki/AOS_study_0001/blob/master/app/src/main/java/io/indexpath/study_001/JoinActivity.kt
+ * https://github.com/Developer-Leby/LoginSample-Kotlin/blob/master/app/src/main/java/com/example/lebyykim/realm/AccountRealmManager.kt
+ * https://github.com/realm/realm-java/blob/master/examples/kotlinExample/src/main/kotlin/io/realm/examples/kotlin/KotlinExampleActivity.kt
+ * https://realm.io/docs/java/latest/?_ga=2.172749477.769786165.1527428973-973285666.1523330369#realms
  */
 class RealmManager(val name: String) {
     //Realm 초기화
