@@ -11,12 +11,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.kcs.sampleLogin.R
-import com.kcs.sampleLogin.Utils
+import com.kcs.sampleLogin.common.Utils
 import com.kcs.sampleLogin.main.MainActivity
 import kotlinx.android.synthetic.main.activity_join.*
 import com.jakewharton.rxbinding2.widget.*
-import io.reactivex.SingleObserver
-import rx.Observable
+import com.kcs.sampleLogin.login.LoginActivity
 import java.util.regex.Pattern
 
 /**
@@ -61,31 +60,27 @@ class JoinActivity : AppCompatActivity() {
             if (checkEmpty()) {
                 Toast.makeText(this@JoinActivity, getString(R.string.error_join_field_empty), Toast.LENGTH_SHORT).show()
             } else {
-//                val intent = Intent(this@JoinActivity, MainActivity::class.java)
-//                startActivity(intent)
 
-                if (inputDataField[1].text.toString() == inputDataField[2].text.toString()) {
-                    Utils.setPWDData(this@JoinActivity, inputDataField[1].text.toString())
-                } else {
-                    Toast.makeText(this@JoinActivity, getString(R.string.error_do_not_same_pwd), Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
+               lastLoginUserData()
 
-                if (inputDataField[3].text.toString().contains("@")) {
-                    Utils.setEMAILData(this@JoinActivity, inputDataField[3].text.toString())
-                } else {
-                    Toast.makeText(this@JoinActivity, getString(R.string.error_discorrent_email), Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
-
-                Utils.setIDData(this@JoinActivity, inputDataField[0].text.toString())
-
-                startActivity(MainActivity.newIntent(this@JoinActivity))
+                startActivity(LoginActivity.newIntent(this@JoinActivity))
                 finish()
             }
         }
     }
 
+    /**
+     * 가장 마지막에 로그인한 유저 정보 저장
+     */
+    private fun lastLoginUserData(){
+        Utils.setIDData(this@JoinActivity, inputDataField[0].text.toString())
+        Utils.setPWDData(this@JoinActivity, inputDataField[1].text.toString())
+        Utils.setEMAILData(this@JoinActivity, inputDataField[3].text.toString())
+    }
+
+    /**
+     * 비어있는지 체크
+     */
     private fun checkEmpty(): Boolean {
         for (dataField in inputDataField) {
             if (dataField.text.toString().isEmpty()) {
@@ -95,6 +90,9 @@ class JoinActivity : AppCompatActivity() {
         return false
     }
 
+    /**
+     * 각 필드별 회원가입 조건이 맞는지 비동기 체크
+     */
     private fun typingListener() {
         // ID
         RxTextView.textChanges(inputDataField[0])
@@ -107,6 +105,7 @@ class JoinActivity : AppCompatActivity() {
         RxTextView.textChanges(inputDataField[1])
                 .map { t -> t.isEmpty() || Pattern.matches(passwordRules, t) }
                 .subscribe({ it ->
+                    inputDataField[2].setText("")
                     reactiveInputTextViewData(1, it)
                 })
 
@@ -124,8 +123,10 @@ class JoinActivity : AppCompatActivity() {
                 .subscribe({
                     reactiveInputTextViewData(3, it)
                 })
+
     }
 
+    var isSuccess = false
     /**
      * 올바른 회원정보를 입력 받았는지 체크
      */
@@ -135,12 +136,14 @@ class JoinActivity : AppCompatActivity() {
                 btnDone.setBackgroundColor(resources.getColor(R.color.disableButton))
                 btnDone.setTextColor(resources.getColor(R.color.gray))
                 btnDone.isEnabled = false
+                isSuccess = false
                 return
             }
         }
         btnDone.setBackgroundColor(resources.getColor(R.color.enableButton))
         btnDone.setTextColor(resources.getColor(R.color.white))
         btnDone.isEnabled = true
+        isSuccess =true
     }
 
     /**

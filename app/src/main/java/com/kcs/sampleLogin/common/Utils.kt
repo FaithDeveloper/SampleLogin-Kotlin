@@ -1,4 +1,4 @@
-package com.kcs.sampleLogin
+package com.kcs.sampleLogin.common
 
 import android.content.Context
 

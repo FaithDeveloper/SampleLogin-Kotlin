@@ -1,11 +1,13 @@
 package com.kcs.sampleLogin.slash
 
-import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
+import com.kcs.sampleLogin.R
 import com.kcs.sampleLogin.main.MainActivity
-import com.kcs.sampleLogin.Utils
+import com.kcs.sampleLogin.common.Utils
 import com.kcs.sampleLogin.join.JoinActivity
+import com.kcs.sampleLogin.login.LoginActivity
 
 /**
  * Created by kcs on 2018. 4. 28..
@@ -13,15 +15,15 @@ import com.kcs.sampleLogin.join.JoinActivity
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_splash)
 
-
-        if (Utils.getIDData(this).isEmpty()
+        Handler().postDelayed({ if (Utils.getIDData(this).isEmpty()
                 || Utils.getPWDData(this).isEmpty()
                 || Utils.getEMAILData(this).isEmpty()){
-             startActivity(JoinActivity.newIntent(this))
+            startActivity(JoinActivity.newIntent(this))
         }else{
-            startActivity(MainActivity.newIntent(this))
+            startActivity(LoginActivity.newIntent(this))
         }
-        finish()
+            finish()}, 800)
     }
 }

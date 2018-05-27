@@ -8,6 +8,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".common.LoginApplication"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name="com.kcs.sampleLogin.slash.SplashActivity">
             <intent-filter>
@@ -22,12 +23,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             />
-        <activity android:name="com.kcs.sampleLogin.main.MainActivity"
+        <activity android:name="com.kcs.sampleLogin.login.LoginActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             />
-        <activity android:name="com.kcs.sampleLogin.LoginDetailActivity"
+        <activity android:name="com.kcs.sampleLogin.main.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"

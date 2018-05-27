@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'realm-android'
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -26,6 +28,10 @@ android {
     }
 }
 
+realm{
+    syncEnabled = true
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -37,8 +43,9 @@ dependencies {
 //    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
 //    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
 
-    implementation group: 'io.reactivex', name: 'rxkotlin', version: "$rxKotlin"
-    implementation 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.1.1'
-    implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
+
+    //RX
+    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxKotlinVersion"
+
 
 }
