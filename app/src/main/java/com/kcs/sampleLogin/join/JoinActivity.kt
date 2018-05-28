@@ -9,13 +9,14 @@ import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import com.kcs.sampleLogin.R
 import com.kcs.sampleLogin.common.Utils
-import com.kcs.sampleLogin.main.MainActivity
 import kotlinx.android.synthetic.main.activity_join.*
 import com.jakewharton.rxbinding2.widget.*
+import com.kcs.sampleLogin.common.Constants
+import com.kcs.sampleLogin.dto.User
 import com.kcs.sampleLogin.login.LoginActivity
+import com.kcs.sampleLogin.module.UserRealmManager
 import java.util.regex.Pattern
 
 /**
@@ -29,19 +30,14 @@ class JoinActivity : AppCompatActivity() {
     private lateinit var inputInfoMessage: Array<String>
     private var isInputCorrectData: Array<Boolean> = arrayOf(false, false, false, false)
 
-    //패스워드 정규식
-    // 대문자,소문자, 숫자 또는 특수문자
-//    private val passwordRules = "^(?=.*[a-zA-Z])((?=.*\\d)|(?=.*\\W)).{6,20}\$"
-    // 대문자, 소문자 숫자, 특수문자 최소 8자 - 최대 20자
-    private val passwordRules = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}\$"
-    //이메일 정규식
-    private val emailRules = "^[a-z0-9_+.-]+@([a-z0-9-]+\\.)+[a-z0-9]{2,4}\$"
 
+    private lateinit var userRealmManager: UserRealmManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_join)
 
+        userRealmManager = UserRealmManager()
         init()
         setListener()
     }
@@ -57,37 +53,30 @@ class JoinActivity : AppCompatActivity() {
 
     private fun setListener() {
         btnDone.setOnClickListener {
-            if (checkEmpty()) {
-                Toast.makeText(this@JoinActivity, getString(R.string.error_join_field_empty), Toast.LENGTH_SHORT).show()
-            } else {
 
-               lastLoginUserData()
-
-                startActivity(LoginActivity.newIntent(this@JoinActivity))
-                finish()
-            }
+            saveLoginUserData()
+            startActivity(LoginActivity.newIntent(this@JoinActivity))
+            finish()
         }
     }
 
     /**
      * 가장 마지막에 로그인한 유저 정보 저장
      */
-    private fun lastLoginUserData(){
-        Utils.setIDData(this@JoinActivity, inputDataField[0].text.toString())
-        Utils.setPWDData(this@JoinActivity, inputDataField[1].text.toString())
-        Utils.setEMAILData(this@JoinActivity, inputDataField[3].text.toString())
-    }
+    private fun saveLoginUserData(){
+        val dataID = inputDataField[0].text.toString()
+        val dataPassword = inputDataField[1].text.toString()
+        val dataEmail = inputDataField[3].text.toString()
 
-    /**
-     * 비어있는지 체크
-     */
-    private fun checkEmpty(): Boolean {
-        for (dataField in inputDataField) {
-            if (dataField.text.toString().isEmpty()) {
-                return true
-            }
-        }
-        return false
+        var user = User()
+        user.id = dataID
+        user.password = dataPassword
+        user.email = dataEmail
+        userRealmManager.insertUser(User::class.java, user)
+
+        Utils.setIDData(this@JoinActivity, dataID)
+        Utils.setPWDData(this@JoinActivity, dataPassword)
+        Utils.setEMAILData(this@JoinActivity, dataEmail)
     }
 
     /**
@@ -103,7 +92,7 @@ class JoinActivity : AppCompatActivity() {
 
         // Password
         RxTextView.textChanges(inputDataField[1])
-                .map { t -> t.isEmpty() || Pattern.matches(passwordRules, t) }
+                .map { t -> t.isEmpty() || Pattern.matches(Constants.PASSWORD_RULS, t) }
                 .subscribe({ it ->
                     inputDataField[2].setText("")
                     reactiveInputTextViewData(1, it)
@@ -119,7 +108,7 @@ class JoinActivity : AppCompatActivity() {
 
         //Email
         RxTextView.textChanges(inputDataField[3])
-                .map { t -> t.isEmpty() || Pattern.matches(emailRules, t) }
+                .map { t -> t.isEmpty() || Pattern.matches(Constants.EMAIL_RULS, t) }
                 .subscribe({
                     reactiveInputTextViewData(3, it)
                 })
@@ -171,5 +160,4 @@ class JoinActivity : AppCompatActivity() {
             return Intent(context, JoinActivity::class.java)
         }
     }
-
 }

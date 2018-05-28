@@ -4,13 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import com.kcs.sampleLogin.R
 import com.kcs.sampleLogin.common.Constants
 import com.kcs.sampleLogin.common.Utils
+import com.kcs.sampleLogin.dto.User
 import com.kcs.sampleLogin.join.JoinActivity
 import com.kcs.sampleLogin.main.MainActivity
+import com.kcs.sampleLogin.module.RealmManager
+import com.kcs.sampleLogin.module.UserRealmManager
 import kotlinx.android.synthetic.main.activity_login.*
 
 /**
@@ -20,8 +24,6 @@ class LoginActivity  : AppCompatActivity() {
     lateinit var inputDataField : Array<EditText>
 
     var idData : String? = null
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,17 +80,26 @@ class LoginActivity  : AppCompatActivity() {
     }
 
     private fun checkSaveUser() : Boolean{
+        var realmManager = UserRealmManager()
+        val userData = realmManager.find(inputDataField[0].text.toString(), "id", User::class.java)
+
+        if(userData == null){
+            Log.d(Constants.LOG_TEST, "User Realm Data Null!!")
+            return false
+        }
+
+
         for (field in inputDataField){
             when(field.id){
                 R.id.editID -> {
-                    if(Utils.getIDData(this) != field.text.toString()){
+                    if(userData.id != field.text.toString()){
                         return false
                     }else{
                         idData = field.text.toString()
                     }
                 }
                 R.id.editPWD ->
-                    if(Utils.getPWDData(this) != field.text.toString()){
+                    if(userData.password != field.text.toString()){
                         return false
                     }
             }

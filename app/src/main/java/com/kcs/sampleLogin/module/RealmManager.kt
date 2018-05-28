@@ -1,5 +1,6 @@
 package com.kcs.sampleLogin.module
 
+import com.kcs.sampleLogin.dto.User
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmModel
@@ -13,7 +14,9 @@ import io.realm.RealmModel
  * https://github.com/realm/realm-java/blob/master/examples/kotlinExample/src/main/kotlin/io/realm/examples/kotlin/KotlinExampleActivity.kt
  * https://realm.io/docs/java/latest/?_ga=2.172749477.769786165.1527428973-973285666.1523330369#realms
  */
-class RealmManager(val name: String) {
+open class RealmManager(val name: String) {
+
+
     //Realm 초기화
     val realm: Realm by lazy {
         val config = RealmConfiguration.Builder().name(name).build()
@@ -36,4 +39,13 @@ class RealmManager(val name: String) {
     fun <T : RealmModel> find(key: String, value: String, targetDto: Class<T>): T? {
         return realm.where(targetDto).equalTo(value, key).findFirst()
     }
+
+    /**
+     * T로 받은 RealModel 데이터에서 모든 값을 리턴
+     */
+    fun <T: RealmModel> findAll(targetDto: Class<T>): List<T>{
+        return realm.where(targetDto).findAll()
+    }
+
+
 }

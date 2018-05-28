@@ -6,7 +6,7 @@ import io.realm.Realm
 /**
  * Created by kcs on 2018. 5. 27..
  */
-class LoginApplication : Application(){
+class SampleLogin : Application(){
     override fun onCreate() {
         super.onCreate()
 
