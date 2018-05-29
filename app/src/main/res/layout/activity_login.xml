@@ -1,62 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
     android:gravity="center_vertical"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp">
+
         <TextView
-            android:text="@string/id"
             android:layout_width="@dimen/txt_join_title_width"
-            android:gravity="center"
-            android:textSize="@dimen/txt_join_title_size"
             android:layout_height="match_parent"
-            />
+            android:gravity="center"
+            android:text="@string/id"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_join_title_size" />
+
         <EditText
             android:id="@+id/editID"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_white"
             android:inputType="text"
             android:maxLines="1"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="@dimen/txt_join_title_size" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp">
+
         <TextView
-            android:text="@string/pwd"
-            android:gravity="center"
-            android:textSize="@dimen/txt_join_title_size"
             android:layout_width="@dimen/txt_join_title_width"
             android:layout_height="match_parent"
-            />
+            android:gravity="center"
+            android:text="@string/pwd"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_join_title_size" />
+
         <EditText
             android:id="@+id/editPWD"
             android:layout_width="0dp"
-            android:maxLines="1"
-            android:inputType="textPassword"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_white"
+            android:inputType="textPassword"
+            android:maxLines="1" />
     </LinearLayout>
+
+    <Switch
+        android:id="@+id/switch_auto_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:thumbTint="@color/enableButton"
+        android:textColor="@color/white"
+        android:text="자동 로그인"/>
 
     <Button
         android:id="@+id/btnDone"
-        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="@string/done"/>
+        android:textColor="@color/white"
+        android:background="@drawable/round_green"
+        android:layout_marginTop="15dp"
+        android:text="@string/done" />
 
     <Button
         android:id="@+id/btn_clear"
-        android:layout_marginTop="30dp"
-        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:text="@string/clear"/>
+        android:textColor="@color/white"
+        android:background="@drawable/round_gray"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:text="@string/clear" />
 </LinearLayout>

@@ -10,6 +10,7 @@ class Utils {
         val INTENT_ID_DATA = "com.kcs.weektest001.utils.id"
         val INTENT_PWD_DATA = "com.kcs.weektest001.utils.pwd"
         val INTENT_EMAIL_DATA = "com.kcs.weektest001.utils.email"
+        val INTENT_AUTO_LOGIN_DATA = "com.kcs.weektest001.utils.auto.login"
 
 
         fun setIDData(ctx: Context, value : String){
@@ -46,6 +47,18 @@ class Utils {
         fun getEMAILData(ctx: Context) : String{
             val preferences = ctx.getSharedPreferences(INTENT_EMAIL_DATA, Context.MODE_PRIVATE)
             return preferences.getString(INTENT_EMAIL_DATA, "")
+        }
+
+        fun setAutoLogin(ctx:Context, value: Boolean){
+            val preferences = ctx.getSharedPreferences(INTENT_AUTO_LOGIN_DATA, Context.MODE_PRIVATE)
+            val editor = preferences.edit()
+            editor.putBoolean(INTENT_AUTO_LOGIN_DATA, value)
+            editor.commit()
+        }
+
+        fun getAutoLogin(ctx: Context) : Boolean{
+            val preferences = ctx.getSharedPreferences(INTENT_AUTO_LOGIN_DATA, Context.MODE_PRIVATE)
+            return preferences.getBoolean(INTENT_AUTO_LOGIN_DATA, false)
         }
     }
 }

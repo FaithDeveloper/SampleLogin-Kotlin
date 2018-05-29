@@ -7,7 +7,7 @@
     <string name="email">EMAIL</string>
     <string name="ok">OK</string>
     <string name="done">Done</string>
-    <string name="clear">Clear Data</string>
+    <string name="clear">Clear</string>
     <string name="cancel">Cancel</string>
     <string name="error_join_field_empty">모두 입력해주세요.</string>
     <string name="error_do_not_same_pwd">비밀번호를 확인해주세요.</string>

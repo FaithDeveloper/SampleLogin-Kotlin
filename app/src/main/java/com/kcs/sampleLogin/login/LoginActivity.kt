@@ -24,6 +24,7 @@ class LoginActivity  : AppCompatActivity() {
     lateinit var inputDataField : Array<EditText>
 
     var idData : String? = null
+    var realmManager = UserRealmManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,12 +76,17 @@ class LoginActivity  : AppCompatActivity() {
             Utils.setEMAILData(this@LoginActivity, "")
             Utils.setPWDData(this@LoginActivity, "")
             startActivity(JoinActivity.newIntent(this@LoginActivity))
+            realmManager.clear()
             finish()
         }
+
+        switch_auto_login.setOnClickListener({
+            Utils.setAutoLogin(this@LoginActivity, switch_auto_login.isChecked)
+        })
     }
 
     private fun checkSaveUser() : Boolean{
-        var realmManager = UserRealmManager()
+
         val userData = realmManager.find(inputDataField[0].text.toString(), "id", User::class.java)
 
         if(userData == null){

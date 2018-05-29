@@ -2,6 +2,7 @@ package com.kcs.sampleLogin.join
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import com.kcs.sampleLogin.R
 import com.kcs.sampleLogin.common.Utils
 import kotlinx.android.synthetic.main.activity_join.*
@@ -29,6 +31,17 @@ class JoinActivity : AppCompatActivity() {
     private lateinit var inputInfoField: Array<TextView>
     private lateinit var inputInfoMessage: Array<String>
     private var isInputCorrectData: Array<Boolean> = arrayOf(false, false, false, false)
+    private var isCheckID = false
+      set(value) {
+          when(value){
+              true -> {
+                  btnCheckExistID.setBackgroundResource(R.drawable.round_green)
+              }
+              false -> {
+                  btnCheckExistID.setBackgroundResource(R.drawable.round_gray)
+              }
+          }
+      }
 
 
     private lateinit var userRealmManager: UserRealmManager
@@ -53,11 +66,25 @@ class JoinActivity : AppCompatActivity() {
 
     private fun setListener() {
         btnDone.setOnClickListener {
+            if (isCheckID) {
+                saveLoginUserData()
+                startActivity(LoginActivity.newIntent(this@JoinActivity))
+                finish()
+            }else{
+                Toast.makeText(this@JoinActivity, "아이디 중복 체크 확인해 주세요", Toast.LENGTH_SHORT).show()
+            }
 
-            saveLoginUserData()
-            startActivity(LoginActivity.newIntent(this@JoinActivity))
-            finish()
         }
+
+        btnCheckExistID.setOnClickListener({
+            val user = userRealmManager.find(editID.text.toString(),"id", User::class.java)
+            if (user != null) {
+                Toast.makeText(this@JoinActivity, "중복된 아이디가 있습니다", Toast.LENGTH_SHORT).show()
+                isCheckID = false
+            }else{
+                isCheckID = true
+            }
+        })
     }
 
     /**
