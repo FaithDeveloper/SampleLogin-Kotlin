@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.kcs.sampleLogin.R
 import com.kcs.sampleLogin.common.Constants
+import com.kcs.sampleLogin.common.Utils
+import com.kcs.sampleLogin.join.JoinActivity
+import com.kcs.sampleLogin.module.UserRealmManager
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +19,15 @@ class MainActivity : AppCompatActivity() {
         val useIdD = intent.getStringExtra(Constants.INTENT_DATA) as String
         txt_id.text = useIdD
 
+        btn_logout.setOnClickListener({
+            Utils.setIDData(this@MainActivity, "")
+            Utils.setEMAILData(this@MainActivity, "")
+            Utils.setPWDData(this@MainActivity, "")
+            startActivity(JoinActivity.newIntent(this@MainActivity))
+            val realmManager = UserRealmManager()
+            realmManager.clear()
+            finish()
+        })
 
     }
 

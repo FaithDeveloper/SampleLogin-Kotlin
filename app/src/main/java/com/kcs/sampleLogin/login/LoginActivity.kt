@@ -66,6 +66,8 @@ class LoginActivity  : AppCompatActivity() {
                 val intent = MainActivity.newIntent(this@LoginActivity)
                 intent.putExtra(Constants.INTENT_DATA, idData ?: "")
                 startActivity(intent)
+                finish()
+                false
             }else{
                 Toast.makeText(this@LoginActivity, getString(R.string.error_fail_login), Toast.LENGTH_SHORT).show()
             }

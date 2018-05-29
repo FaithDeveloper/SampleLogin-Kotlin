@@ -32,16 +32,6 @@ class JoinActivity : AppCompatActivity() {
     private lateinit var inputInfoMessage: Array<String>
     private var isInputCorrectData: Array<Boolean> = arrayOf(false, false, false, false)
     private var isCheckID = false
-      set(value) {
-          when(value){
-              true -> {
-                  btnCheckExistID.setBackgroundResource(R.drawable.round_green)
-              }
-              false -> {
-                  btnCheckExistID.setBackgroundResource(R.drawable.round_gray)
-              }
-          }
-      }
 
 
     private lateinit var userRealmManager: UserRealmManager
@@ -66,6 +56,7 @@ class JoinActivity : AppCompatActivity() {
 
     private fun setListener() {
         btnDone.setOnClickListener {
+
             if (isCheckID) {
                 saveLoginUserData()
                 startActivity(LoginActivity.newIntent(this@JoinActivity))
@@ -80,11 +71,22 @@ class JoinActivity : AppCompatActivity() {
             val user = userRealmManager.find(editID.text.toString(),"id", User::class.java)
             if (user != null) {
                 Toast.makeText(this@JoinActivity, "중복된 아이디가 있습니다", Toast.LENGTH_SHORT).show()
-                isCheckID = false
+                settingCheckExistID(false)
+
             }else{
-                isCheckID = true
+                settingCheckExistID(true)
             }
         })
+    }
+
+    private fun settingCheckExistID(isCheck: Boolean){
+        isCheckID = isCheck
+
+        if(isCheck) {
+            btnCheckExistID.setBackgroundResource(R.drawable.round_green)
+        }else{
+            btnCheckExistID.setBackgroundResource(R.drawable.round_gray)
+        }
     }
 
     /**
@@ -114,6 +116,7 @@ class JoinActivity : AppCompatActivity() {
         RxTextView.textChanges(inputDataField[0])
                 .map { t -> t.length in 1..7 }
                 .subscribe({ it ->
+                    settingCheckExistID(false)
                     reactiveInputTextViewData(0, !it)
                 })
 

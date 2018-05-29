@@ -4,6 +4,7 @@ import com.kcs.sampleLogin.dto.User
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmModel
+import io.realm.RealmResults
 
 /**
  * Created by kcs on 2018. 5. 27..
@@ -43,7 +44,7 @@ open class RealmManager(val name: String) {
     /**
      * T로 받은 RealModel 데이터에서 모든 값을 리턴
      */
-    fun <T: RealmModel> findAll(targetDto: Class<T>): List<T>{
+    fun <T: RealmModel> findAll(targetDto: Class<T>): RealmResults<T>{
         return realm.where(targetDto).findAll()
     }
 
