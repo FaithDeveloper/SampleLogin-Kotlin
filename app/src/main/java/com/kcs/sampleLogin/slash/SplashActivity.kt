@@ -11,6 +11,8 @@ import com.kcs.sampleLogin.dto.User
 import com.kcs.sampleLogin.join.JoinActivity
 import com.kcs.sampleLogin.login.LoginActivity
 import com.kcs.sampleLogin.module.UserRealmManager
+import org.jetbrains.anko.startActivity
+
 
 /**
  * Created by kcs on 2018. 4. 28..
@@ -36,22 +38,26 @@ class SplashActivity : AppCompatActivity() {
             if (userID.isEmpty()
                 || userPwd.isEmpty()
                 || userEmail.isEmpty()){
-              startActivity(JoinActivity.newIntent(this))
+                //anko 의 StartActivity 활용
+                startActivity<JoinActivity>()
                 finish()
                 return@postDelayed
             }
             if(Utils.getAutoLogin(this)){
                 val user = realmManager.find(userID, "id", User::class.java)
                 if (user?.id == userID && user?.password == userPwd){
-                    val intent = MainActivity.newIntent(this@SplashActivity)
-                    intent.putExtra(Constants.INTENT_DATA, userID)
-                    startActivity(intent)
+//                    val intent = MainActivity.newIntent(this@SplashActivity)
+//                    intent.putExtra(Constants.INTENT_DATA, userID)
+//                    startActivity(intent)
+                    //anko 의 StartActivity에 intent data 삽입
+                    startActivity<MainActivity>(Constants.INTENT_DATA to userID)
                     finish()
                     return@postDelayed
                 }
             }
 
-            startActivity(LoginActivity.newIntent(this))
+//            startActivity(LoginActivity.newIntent(this))
+            startActivity<LoginActivity>()
             finish()
         }, 800)
     }

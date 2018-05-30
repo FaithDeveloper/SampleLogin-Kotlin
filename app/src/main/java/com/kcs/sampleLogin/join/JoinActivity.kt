@@ -13,12 +13,13 @@ import android.widget.TextView
 import android.widget.Toast
 import com.kcs.sampleLogin.R
 import com.kcs.sampleLogin.common.Utils
-import kotlinx.android.synthetic.main.activity_join.*
 import com.jakewharton.rxbinding2.widget.*
 import com.kcs.sampleLogin.common.Constants
 import com.kcs.sampleLogin.dto.User
 import com.kcs.sampleLogin.login.LoginActivity
 import com.kcs.sampleLogin.module.UserRealmManager
+import kotlinx.android.synthetic.main.activity_join_degin.*
+import org.jetbrains.anko.toast
 import java.util.regex.Pattern
 
 /**
@@ -27,8 +28,8 @@ import java.util.regex.Pattern
 class JoinActivity : AppCompatActivity() {
 
     private lateinit var inputDataField: Array<EditText>
-    private lateinit var inputInfoLayoutField: Array<LinearLayout>
-    private lateinit var inputInfoField: Array<TextView>
+//    private lateinit var inputInfoLayoutField: Array<LinearLayout>
+//    private lateinit var inputInfoField: Array<TextView>
     private lateinit var inputInfoMessage: Array<String>
     private var isInputCorrectData: Array<Boolean> = arrayOf(false, false, false, false)
     private var isCheckID = false
@@ -49,7 +50,7 @@ class JoinActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_join)
+        setContentView(R.layout.activity_join_degin)
 
         userRealmManager = UserRealmManager()
         init()
@@ -58,8 +59,8 @@ class JoinActivity : AppCompatActivity() {
 
     private fun init() {
         inputDataField = arrayOf(editID, editPWD, editPWDConfirm, editEmail)
-        inputInfoLayoutField = arrayOf(layoutInfoInputID, layoutInfoInputPWD, layoutInfoInputRePWD, layoutInfoInputEmail)
-        inputInfoField = arrayOf(txtInfoInputID, txtInfoInputPWD, txtInfoInputRePWD, txtInfoInputEmail)
+//        inputInfoLayoutField = arrayOf(layoutInfoInputID, layoutInfoInputPWD, layoutInfoInputRePWD, layoutInfoInputEmail)
+//        inputInfoField = arrayOf(txtInfoInputID, txtInfoInputPWD, txtInfoInputRePWD, txtInfoInputEmail)
         inputInfoMessage = arrayOf(getString(R.string.txtInputInfoID), getString(R.string.txtInputInfoPWD), getString(R.string.txtInputInfoRePWD), getString(R.string.error_discorrent_email))
 
         typingListener()
@@ -73,7 +74,8 @@ class JoinActivity : AppCompatActivity() {
                 startActivity(LoginActivity.newIntent(this@JoinActivity))
                 finish()
             }else{
-                Toast.makeText(this@JoinActivity, getString(R.string.error_do_not_check_id), Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@JoinActivity, getString(R.string.error_do_not_check_id), Toast.LENGTH_SHORT).show()
+                toast(getString(R.string.error_do_not_check_id))
             }
 
         }
@@ -81,12 +83,14 @@ class JoinActivity : AppCompatActivity() {
         btnCheckExistID.setOnClickListener({
             if(editID.text.toString().isEmpty()){
                 isCheckID = false
-                Toast.makeText(this@JoinActivity, getString(R.string.error_do_not_input_id), Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@JoinActivity, getString(R.string.error_do_not_input_id), Toast.LENGTH_SHORT).show()
+                toast(getString(R.string.error_do_not_input_id))
                 return@setOnClickListener
             }
             val user = userRealmManager.find(editID.text.toString(),Constants.USER_TABLE_ID, User::class.java)
             if (user != null) {
-                Toast.makeText(this@JoinActivity, getString(R.string.error_exist_id), Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@JoinActivity, getString(R.string.error_exist_id), Toast.LENGTH_SHORT).show()
+                toast(getString(R.string.error_exist_id))
                 isCheckID = false
 
             }else{
@@ -124,6 +128,8 @@ class JoinActivity : AppCompatActivity() {
                 .map { t -> t.length in 1..7 }
                 .subscribe({ it ->
                     isCheckID = false
+                    editIDLayout.error = inputInfoMessage[0]
+                    editIDLayout.isErrorEnabled = it
                     reactiveInputTextViewData(0, !it)
                 })
 
@@ -182,12 +188,14 @@ class JoinActivity : AppCompatActivity() {
             isInputCorrectData[indexPath] = false
         }
 
-        if (it) {
-            inputInfoLayoutField[indexPath].visibility = View.GONE
-        } else {
-            inputInfoLayoutField[indexPath].visibility = View.VISIBLE
-            inputInfoField[indexPath].text = inputInfoMessage[indexPath]
-        }
+
+
+//        if (it) {
+//            inputInfoLayoutField[indexPath].visibility = View.GONE
+//        } else {
+//            inputInfoLayoutField[indexPath].visibility = View.VISIBLE
+//            inputInfoField[indexPath].text = inputInfoMessage[indexPath]
+//        }
 
         reactiveCheckCorrectData()
     }
