@@ -82,6 +82,7 @@ class LoginActivity  : AppCompatActivity() {
             finish()
         }
 
+        switch_auto_login.isChecked = Utils.getAutoLogin(this@LoginActivity)
         switch_auto_login.setOnClickListener({
             Utils.setAutoLogin(this@LoginActivity, switch_auto_login.isChecked)
         })

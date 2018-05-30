@@ -20,12 +20,13 @@ class MainActivity : AppCompatActivity() {
         txt_id.text = useIdD
 
         btn_logout.setOnClickListener({
+            val realmManager = UserRealmManager()
+            realmManager.clear()
             Utils.setIDData(this@MainActivity, "")
             Utils.setEMAILData(this@MainActivity, "")
             Utils.setPWDData(this@MainActivity, "")
             startActivity(JoinActivity.newIntent(this@MainActivity))
-            val realmManager = UserRealmManager()
-            realmManager.clear()
+
             finish()
         })
 

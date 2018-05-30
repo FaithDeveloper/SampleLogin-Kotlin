@@ -32,6 +32,17 @@ class JoinActivity : AppCompatActivity() {
     private lateinit var inputInfoMessage: Array<String>
     private var isInputCorrectData: Array<Boolean> = arrayOf(false, false, false, false)
     private var isCheckID = false
+      set(value){
+          when (value) {
+              true -> {
+                  btnCheckExistID.setBackgroundResource(R.drawable.round_green)
+              }
+              false -> {
+                  btnCheckExistID.setBackgroundResource(R.drawable.round_gray)
+              }
+          }
+          field = value
+      }
 
 
     private lateinit var userRealmManager: UserRealmManager
@@ -62,32 +73,28 @@ class JoinActivity : AppCompatActivity() {
                 startActivity(LoginActivity.newIntent(this@JoinActivity))
                 finish()
             }else{
-                Toast.makeText(this@JoinActivity, "아이디 중복 체크 확인해 주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@JoinActivity, getString(R.string.error_do_not_check_id), Toast.LENGTH_SHORT).show()
             }
 
         }
 
         btnCheckExistID.setOnClickListener({
-            val user = userRealmManager.find(editID.text.toString(),"id", User::class.java)
+            if(editID.text.toString().isEmpty()){
+                isCheckID = false
+                Toast.makeText(this@JoinActivity, getString(R.string.error_do_not_input_id), Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val user = userRealmManager.find(editID.text.toString(),Constants.USER_TABLE_ID, User::class.java)
             if (user != null) {
-                Toast.makeText(this@JoinActivity, "중복된 아이디가 있습니다", Toast.LENGTH_SHORT).show()
-                settingCheckExistID(false)
+                Toast.makeText(this@JoinActivity, getString(R.string.error_exist_id), Toast.LENGTH_SHORT).show()
+                isCheckID = false
 
             }else{
-                settingCheckExistID(true)
+                isCheckID = true
             }
         })
     }
 
-    private fun settingCheckExistID(isCheck: Boolean){
-        isCheckID = isCheck
-
-        if(isCheck) {
-            btnCheckExistID.setBackgroundResource(R.drawable.round_green)
-        }else{
-            btnCheckExistID.setBackgroundResource(R.drawable.round_gray)
-        }
-    }
 
     /**
      * 가장 마지막에 로그인한 유저 정보 저장
@@ -116,7 +123,7 @@ class JoinActivity : AppCompatActivity() {
         RxTextView.textChanges(inputDataField[0])
                 .map { t -> t.length in 1..7 }
                 .subscribe({ it ->
-                    settingCheckExistID(false)
+                    isCheckID = false
                     reactiveInputTextViewData(0, !it)
                 })
 

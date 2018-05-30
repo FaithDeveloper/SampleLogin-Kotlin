@@ -27,9 +27,10 @@ open class RealmManager(val name: String) {
     /**
      * Realm에 저장된 모든 데이터 삭제
      * */
-    fun clear(){
+    open fun clear(){
         val config = RealmConfiguration.Builder().name(name).build()
         if (config != null) {
+            realm.close()
             Realm.deleteRealm(config)
         }
     }
