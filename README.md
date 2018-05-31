@@ -49,3 +49,119 @@
 `android.support.design.widget.TextInputLayout` 을 활용하여 Input Text 화면 구성하였습니다. 
 
 ##### activity_siginup_degin.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/join_name"
+        android:textColor="@color/white"
+        android:textSize="30dp" />
+
+    <!-- 아이디 중복 확인 UI 구성 -->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/editIDLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/white">
+
+        <EditText
+            android:id="@+id/editID"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/white"
+            android:hint="@string/id"
+            android:inputType="text"
+            android:maxLength="12"
+            android:maxLines="1"
+            android:textColor="@color/white" />
+    </android.support.design.widget.TextInputLayout>
+
+    <!-- 아이디 중복 확인 UI 구성 -->
+    <Button
+        android:id="@+id/btnCheckExistID"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/round_green"
+        android:text="중복체크"
+        android:textColor="@color/white" />
+
+    <!-- 패스워드 UI 구성 -->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/editPWDLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/pwd"
+        android:textColorHint="@color/white">
+
+        <EditText
+            android:id="@+id/editPWD"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/white"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:textColor="@color/white" />
+    </android.support.design.widget.TextInputLayout>
+
+    <!-- 패스워드 확인 UI 구성 -->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/editPWDConfirmLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/pwd_confirm"
+        android:textColorHint="@color/white">
+
+        <EditText
+            android:id="@+id/editPWDConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/white"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:textColor="@color/white" />
+    </android.support.design.widget.TextInputLayout>
+
+    <!-- 이메일 입력 UI 구성 -->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/editEmailLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/email"
+        android:textColorHint="@color/white">
+
+        <EditText
+            android:id="@+id/editEmail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/white"
+            android:inputType="textEmailAddress"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:textColor="@color/white" />
+    </android.support.design.widget.TextInputLayout>
+
+    <!-- 회원가입 버튼 -->
+    <Button
+        android:id="@+id/btnDone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/join_done" />
+</LinearLayout>
+```
