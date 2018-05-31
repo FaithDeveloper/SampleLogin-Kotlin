@@ -8,6 +8,7 @@ import com.kcs.sampleLogin.R
 import com.kcs.sampleLogin.common.Constants
 import com.kcs.sampleLogin.common.Utils
 import com.kcs.sampleLogin.join.JoinActivity
+import com.kcs.sampleLogin.login.LoginActivity
 import com.kcs.sampleLogin.module.UserRealmManager
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -21,11 +22,11 @@ class MainActivity : AppCompatActivity() {
 
         btn_logout.setOnClickListener({
             val realmManager = UserRealmManager()
-            realmManager.clear()
             Utils.setIDData(this@MainActivity, "")
             Utils.setEMAILData(this@MainActivity, "")
             Utils.setPWDData(this@MainActivity, "")
-            startActivity(JoinActivity.newIntent(this@MainActivity))
+            Utils.setAutoLogin(this@MainActivity, false)
+            startActivity(LoginActivity.newIntent(this@MainActivity))
 
             finish()
         })

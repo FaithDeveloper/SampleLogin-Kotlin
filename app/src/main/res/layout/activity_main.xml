@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:textColor="@color/white"
-        android:background="@drawable/round_gray"
+        android:background="@drawable/round_light_brown"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:text="@string/logout" />

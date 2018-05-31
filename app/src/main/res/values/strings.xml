@@ -1,14 +1,16 @@
 <resources>
     <string name="app_name">SampleLogin</string>
-    <string name="join_name">Join</string>
-    <string name="id">ID</string>
-    <string name="pwd">PASSWORD</string>
-    <string name="pwd_confirm">PASSWORD CONFIRM</string>
-    <string name="email">EMAIL</string>
-    <string name="ok">OK</string>
-    <string name="done">Done</string>
-    <string name="clear">Clear</string>
-    <string name="cancel">Cancel</string>
+    <string name="join_name">회원가입</string>
+    <string name="id">아이디</string>
+    <string name="pwd">비밀번호</string>
+    <string name="pwd_confirm">비밀번호 확인</string>
+    <string name="email">이메일</string>
+    <string name="ok">확인</string>
+    <string name="join_done">가입하기</string>
+    <string name="done">확인</string>
+    <string name="join">회원가입</string>
+    <string name="clear">초기화</string>
+    <string name="cancel">취소</string>
     <string name="error_join_field_empty">모두 입력해주세요.</string>
     <string name="error_do_not_same_pwd">비밀번호를 확인해주세요.</string>
     <string name="error_discorrent_email">이메일을 확인해주세요.</string>

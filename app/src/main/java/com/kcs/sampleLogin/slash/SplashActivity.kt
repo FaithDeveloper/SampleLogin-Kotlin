@@ -35,14 +35,6 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         Handler().postDelayed({
-            if (userID.isEmpty()
-                || userPwd.isEmpty()
-                || userEmail.isEmpty()){
-                //anko 의 StartActivity 활용
-                startActivity<JoinActivity>()
-                finish()
-                return@postDelayed
-            }
             if(Utils.getAutoLogin(this)){
                 val user = realmManager.find(userID, "id", User::class.java)
                 if (user?.id == userID && user?.password == userPwd){

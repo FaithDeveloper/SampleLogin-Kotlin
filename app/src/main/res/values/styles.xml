@@ -23,13 +23,21 @@
 
     <style name="AppTheme.TextFloatLabelAppearance" parent="TextAppearance.Design.Hint">
         <!-- Floating label appearance here -->
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColor">#C3FBD3</item>
         <item name="android:textSize">15sp</item>
     </style>
 
     <style name="AppTheme.TextErrorAppearance" parent="TextAppearance.Design.Error">
         <!-- Error message appearance here -->
-        <item name="android:textColor">#ff0000</item>
+        <item name="android:textColor">@android:color/holo_red_light</item>
         <item name="android:textSize">13sp</item>
     </style>
+
+    <style name="CustomSwitchTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorControlActivated">@color/enableButton</item>
+        <item name="colorSwitchThumbNormal">@color/gray</item>
+        <item name="android:colorForeground">#757575</item>
+
+    </style>
+
 </resources>

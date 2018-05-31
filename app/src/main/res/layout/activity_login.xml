@@ -29,7 +29,7 @@
             android:background="@drawable/round_white"
             android:inputType="text"
             android:maxLines="1"
-            android:textColor="@android:color/holo_red_light"
+            android:textColor="@color/black"
             android:textSize="@dimen/txt_join_title_size" />
     </LinearLayout>
 
@@ -54,33 +54,55 @@
             android:layout_weight="1"
             android:background="@drawable/round_white"
             android:inputType="textPassword"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:textColor="@color/black" />
     </LinearLayout>
 
-    <Switch
+    <!-- Switch 가 아닌 SwitchCompat -->
+    <android.support.v7.widget.SwitchCompat
         android:id="@+id/switch_auto_login"
+        style="@style/CustomSwitchTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:thumbTint="@color/enableButton"
+        android:text="자동 로그인"
         android:textColor="@color/white"
-        android:text="자동 로그인"/>
+        android:thumbTint="@color/gray" />
 
     <Button
         android:id="@+id/btnDone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:textColor="@color/white"
-        android:background="@drawable/round_green"
         android:layout_marginTop="15dp"
-        android:text="@string/done" />
+        android:background="@drawable/round_green"
+        android:text="@string/done"
+        android:textColor="@color/white" />
 
-    <Button
-        android:id="@+id/btn_clear"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:textColor="@color/white"
-        android:background="@drawable/round_gray"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:text="@string/clear" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="15dp">
+
+        <Button
+            android:id="@+id/btnJoin"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/round_gray"
+            android:text="@string/join"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btn_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/round_light_brown"
+            android:text="@string/clear"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
 </LinearLayout>
