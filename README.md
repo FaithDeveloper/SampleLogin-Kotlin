@@ -40,7 +40,7 @@
 
 ## 실행화면
 
-<img src="https://github.com/FaithDeveloper/SampleLogin-Kotlin/blob/master/raw/master/sample_login.gif" data-canonical-src="https://github.com/FaithDeveloper/SampleLogin-Kotlin/blob/master/raw/master/sample_login_20180531.gif" width="300" height="533" />
+<img src="https://github.com/FaithDeveloper/SampleLogin-Kotlin/blob/master/raw/master/sample_login_20180531.gif" data-canonical-src="https://github.com/FaithDeveloper/SampleLogin-Kotlin/blob/master/raw/master/sample_login_20180531.gif" width="300" height="533" />
 
 ## 관련 소스
 
