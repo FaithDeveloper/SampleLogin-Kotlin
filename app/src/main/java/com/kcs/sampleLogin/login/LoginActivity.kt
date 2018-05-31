@@ -44,13 +44,18 @@ class LoginActivity  : AppCompatActivity() {
         }
     }
 
+    /**
+     * RX
+     */
     private fun initObservable(){
+        // Observable 설정
         val observableId = RxTextView.textChanges(inputDataField[0])
                 .map({ t -> !t.isEmpty()})
-        val observablepwd = RxTextView.textChanges(inputDataField[1])
+        val observablePwd = RxTextView.textChanges(inputDataField[1])
                 .map({ t -> !t.isEmpty()})
 
-        val combineLatestLoginEnable: io.reactivex.Observable<Boolean> = io.reactivex.Observable.combineLatest(observableId, observablepwd, BiFunction{ i, e -> i && e})
+        // combineLatest 설정
+        val combineLatestLoginEnable: io.reactivex.Observable<Boolean> = io.reactivex.Observable.combineLatest(observableId, observablePwd, BiFunction{ i, e -> i && e})
         combineLatestLoginEnable.distinctUntilChanged()
                 .subscribe{enable ->
                     btnDone.isEnabled = enable
