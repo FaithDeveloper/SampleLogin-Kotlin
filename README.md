@@ -41,3 +41,11 @@
 ## 실행화면
 
 <img src="https://github.com/FaithDeveloper/SampleLogin-Kotlin/blob/master/raw/master/sample_login.gif" data-canonical-src="https://github.com/FaithDeveloper/SampleLogin-Kotlin/blob/master/raw/master/sample_login.gif" width="300" height="533" />
+
+## 관련 소스
+
+#### 1.Android Support Degin 을 활용한 화면 구성
+
+`android.support.design.widget.TextInputLayout` 을 활용하여 Input Text 화면 구성하였습니다. 
+
+##### activity_siginup_degin.xml
