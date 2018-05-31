@@ -65,7 +65,7 @@ class JoinActivity : AppCompatActivity() {
 
             if (isCheckID) {
                 saveLoginUserData()
-                startActivity(LoginActivity.newIntent(this@JoinActivity))
+//                startActivity(LoginActivity.newIntent(this@JoinActivity))
                 finish()
             }else{
                 toast(getString(R.string.error_do_not_check_id))
