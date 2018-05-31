@@ -28,4 +28,4 @@
 ```
 
 ## 실행화면
-<img src="https://github.com/FaithDeveloper/SampleLogin-Kotlin/blob/master/raw/master/sample_login.gif" data-canonical-src="https://github.com/FaithDeveloper/SampleLogin-Kotlin/blob/master/raw/master/sample_login.gif" width="500" height="899" />
+<img src="https://github.com/FaithDeveloper/SampleLogin-Kotlin/blob/master/raw/master/sample_login.gif" data-canonical-src="https://github.com/FaithDeveloper/SampleLogin-Kotlin/blob/master/raw/master/sample_login.gif" width="300" height="533" />
