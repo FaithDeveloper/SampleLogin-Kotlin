@@ -29,4 +29,4 @@
 
 ## 실행화면
 
-<img width="500" height="899">https://github.com/FaithDeveloper/SampleLogin-Kotlin/blob/master/raw/master/sample_login.gif</img>
+[![img](https://github.com/FaithDeveloper/SampleLogin-Kotlin/blob/master/raw/master/sample_login.gif | width=500)](https://github.com/FaithDeveloper/SampleLogin-Kotlin/blob/master/raw/master/sample_login.gif)
