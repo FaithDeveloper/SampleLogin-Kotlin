@@ -164,3 +164,18 @@ Rx에서 제공하는 Operators 를 확인하려면 [여기](http://reactivex.i
 ### 컴포지트 디스포저블(Composite Disposable)
 
 Composite Disposable을 사용하여 여러 개의 디스포저블 객체를 하나의 객체에서 사용 가능합니다. Android에서 View에 해당되는 액티비티나 프래그먼트에서 사용한다면 리소스 관리에 도움이 될 것입니다.
+
+```kotlin
+// Composite Disposable
+internal val viewDisposables = CompositeDisposable()
+// disposable
+val disposableEmail = RxTextView.textChanges(inputDataField[3])
+	.map { t -> t.isEmpty() || Pattern.matches(Constants.EMAIL_RULS, t) }
+	.subscribe({
+ 	   reactiveInputTextViewData(3, it)
+	}){
+  	  //Error Block
+	}
+viewDisposables.add(disposable)
+```
+
