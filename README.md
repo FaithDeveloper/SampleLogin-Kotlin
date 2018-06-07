@@ -113,15 +113,21 @@
 
  Rx을 알기 위해서는 옵서버블(Observable)와 옵서버(Observer) 개념을 알고 있어야 합니다.
 
+
+
 #### **옵서버블(Observable)**
 
 "이벤트"를 만들어 내는(emit) 주체로, "이벤트 스트림"을 통해 만든 이벤트를 보냅니다. 한개부터 여러개까지 생성 가능하며, 특정 조건을 만족 시 이벤트를 만들어 내지 않을 수도 있으며, 유지하여 계속해서 이벤트를 만들 수도 있습니다.
+
+
 
 #### **옵서버(Observer)**
 
 옵서버블에 만들어진 이벤트에 "반응(react)"합니다. 이벤트를 받았을 때 수행할 작업을 정의합니다. 반응을 하기 위해서 지속적으로 옵서버블을 관찰해야하는데 이를 '옵서버가 옵서버블을 "구독(subscribe)"다'라고 표현합니다.
 
 ![img](https://t1.daumcdn.net/cfile/tistory/99E021465B18F37915)
+
+
 
 #### 연산자(Operators)
 
@@ -134,6 +140,15 @@ Rx에서 제공하는 Operators 를 확인하려면 [여기](http://reactivex.i
 >
 > 거의 모든 연산자들은 Observable 상에서 동작하고 Observable을 리턴합니다. 이 접근 방법은 연산자들을 연달아 호출 할 수 있는 연산자 체인을 제공합니다. 연산자 체인에서 각각의 연산자는 이전 연산자가 리턴한 Observable을 기반으로 동작하며 동작에 따라 Observable을 변경합니다. Observable의 연산자 체인은 원본 Observable과 독립적으로 실행될 수 없고 *순서대로* 실행되어야 한다
 
+**RxBinding과 연산자를 사용한 옵서버블 만든 예**
+
+```kotlin
+ val observableId = RxTextView.textChanges(editView)
+                .map({ t -> !t.isEmpty()})
+```
+
+
+
 #### 스케줄러(Scheduler)
 
 스케줄러(Scheduler)는 작업을 수행할 스레드(thread)를 지정 합니다. 다양한 스레드를 지정할 수 있으며 Android에서 UI 업데이트하는 메인 스레드도 사용 가능합니다. 스케줄러는 observeOn() 메서드를 사용하여 지정합니다. 
@@ -142,9 +157,13 @@ Rx에서 제공하는 Operators 를 확인하려면 [여기](http://reactivex.i
 > 1) observeOn() 메서드 호출한 직후에 오는 연산자 
 > 2) 옵서버에서 수행되는 작업 앞의 observeOn() 메서드에서 지정한 스레드
 
+
+
 #### 디스포저블(Disposable) 
 
 옵서버가 옵서버블을 구독할 때 생성되는 객체로, 옵서버블에서 만드는 이벤트 스트림과 이에 필요한 리소스를 관리합니다. 한가지 예로써 구독 해제(unsubscribe)을 말할 수 있습니다.  디스포저블을 통하여 구독 해제한 경우 옵서버블은 이를 감지하여 유지하고 있던 리소스를 해제합니다.
+
+
 
 #### 컴포지트 디스포저블(Composite Disposable)
 
