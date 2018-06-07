@@ -58,8 +58,6 @@
 
 실행 화면을 보시면 `회원가입` 에서 아이디, 비밀번호 입력을 시도하면 Input Text 화면이 변경되는 것을 확인할 수 있습니다. 이처럼 기존의 EditText Widget 의 디자인을 깔끔하고 다양하게 표현할 수 있도록 도와줍니다. 특히 Android Support Degin은 Rx을 활용하면 그 영향력은 파격적입니다.
 
-<br/>
-
 ##### activity_siginup_degin.xml
 
 ```xml
