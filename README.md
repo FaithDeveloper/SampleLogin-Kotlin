@@ -99,7 +99,7 @@
 
 <br/>
 
-## RxJava, RxBinding을 활용한 회원가입 페이지 만들기
+## RxJava, RxBinding
 
 > **Rx란?**
 >
@@ -179,3 +179,48 @@ val disposableEmail = RxTextView.textChanges(inputDataField[3])
 viewDisposables.add(disposable)
 ```
 
+### RxBinding 
+
+Android UI 위젯을 위한 RxJava binding APIs 지원 라이브러리 플랫폼입니다. 예를들면 RxTextView, RxView, RxAdapter 등 다양하게 존재합니다.
+
+**RxTextView 사용 예**
+
+```kotlin
+ RxTextView.textChanges(editText)
+```
+
+**Platform bindings**
+
+```
+implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
+```
+
+**'support-v4' library bindings**
+
+```
+implementation 'com.jakewharton.rxbinding2:rxbinding-support-v4:2.1.1'
+```
+
+**'appcompat-v7' library bindings**
+
+```
+implementation 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.1.1'
+```
+
+**'design' library bindings**
+
+```
+implementation 'com.jakewharton.rxbinding2:rxbinding-design:2.1.1'
+```
+
+**'recyclerview-v7' library bindings**
+
+```
+implementation 'com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.1.1'
+```
+
+**'leanback-v17' library bindings**
+
+```
+implementation 'com.jakewharton.rxbinding2:rxbinding-leanback-v17:2.1.1'
+```
