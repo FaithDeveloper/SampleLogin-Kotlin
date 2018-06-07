@@ -35,7 +35,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         Handler().postDelayed({
-            if(Utils.getAutoLogin(this)){
+            if(Utils.getAutoLogin(this) && realmManager.findAll(User::class.java).size > 0){
                 val user = realmManager.find(userID, "id", User::class.java)
                 if (user?.id == userID && user?.password == userPwd){
 //                    val intent = MainActivity.newIntent(this@SplashActivity)

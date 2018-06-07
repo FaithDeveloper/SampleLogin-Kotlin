@@ -15,6 +15,9 @@ import com.kcs.sampleLogin.dto.User
 import com.kcs.sampleLogin.join.JoinActivity
 import com.kcs.sampleLogin.main.MainActivity
 import com.kcs.sampleLogin.module.UserRealmManager
+import io.reactivex.Observable
+
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
@@ -28,6 +31,9 @@ class LoginActivity  : AppCompatActivity() {
 
     var idData : String? = null
     var realmManager = UserRealmManager()
+
+    // 여러 디스포저블 객체를 관리할 수 있는 CompositeDisposable 객체를 초기화 합니다.
+    internal val viewDisposables = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,12 +60,13 @@ class LoginActivity  : AppCompatActivity() {
         val observablePwd = RxTextView.textChanges(inputDataField[1])
                 .map({ t -> !t.isEmpty()})
 
+
         // combineLatest 설정
-        val combineLatestLoginEnable: io.reactivex.Observable<Boolean> = io.reactivex.Observable.combineLatest(observableId, observablePwd, BiFunction{ i, e -> i && e})
-        combineLatestLoginEnable.distinctUntilChanged()
-                .subscribe{enable ->
+        val combineLatestLoginEnable: Observable<Boolean> = Observable.combineLatest(observableId, observablePwd, BiFunction{ i, e -> i && e})
+        val disposable = combineLatestLoginEnable.distinctUntilChanged()
+                .subscribe ({ enable ->
                     btnDone.isEnabled = enable
-                    when(enable) {
+                    when (enable) {
                         true -> {
                             btnDone.setBackgroundColor(resources.getColor(R.color.enableButton))
                         }
@@ -67,8 +74,12 @@ class LoginActivity  : AppCompatActivity() {
                             btnDone.setBackgroundColor(resources.getColor(R.color.disableButton))
                         }
                     }
+                }){
+                    //Error Block
                 }
 
+
+        viewDisposables.add(disposable)
     }
 
     private fun checkEmpty() : Boolean{
@@ -151,5 +162,11 @@ class LoginActivity  : AppCompatActivity() {
             }
         }
         return true
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // 관리하고 있던 디스포저블 객체를 모두 해제합니다.
+        viewDisposables.clear()
     }
 }

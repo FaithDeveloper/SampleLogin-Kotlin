@@ -38,7 +38,7 @@ open class RealmManager(val name: String) {
     /**
      * T로 받은 RealModel 데이터에서 key,value 값을 가진 데이터를 찾습니다
      */
-    fun <T : RealmModel> find(key: String, value: String, targetDto: Class<T>): T? {
+    fun <T : RealmModel> find(value: String, key: String, targetDto: Class<T>): T? {
         return realm.where(targetDto).equalTo(value, key).findFirst()
     }
 

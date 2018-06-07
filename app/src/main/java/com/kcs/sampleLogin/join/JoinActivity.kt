@@ -8,20 +8,23 @@ import android.support.v7.app.AppCompatActivity
 
 import android.widget.EditText
 import com.kcs.sampleLogin.R
-import com.kcs.sampleLogin.common.Utils
 import com.jakewharton.rxbinding2.widget.*
 import com.kcs.sampleLogin.common.Constants
 import com.kcs.sampleLogin.dto.User
-import com.kcs.sampleLogin.login.LoginActivity
 import com.kcs.sampleLogin.module.UserRealmManager
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_join_degin.*
 import org.jetbrains.anko.toast
+import java.util.*
 import java.util.regex.Pattern
 
 /**
  * Created by kcs on 2018. 4. 28..
  */
 class JoinActivity : AppCompatActivity() {
+    // 여러 디스포저블 객체를 관리할 수 있는 CompositeDisposable 객체를 초기화 합니다.
+    internal val viewDisposables = CompositeDisposable()
 
     private lateinit var inputDataField: Array<EditText>
     private lateinit var textInputLayoutArray: Array<TextInputLayout>
@@ -111,36 +114,51 @@ class JoinActivity : AppCompatActivity() {
      */
     private fun typingListener() {
         // ID
-        RxTextView.textChanges(inputDataField[0])
+        val disposableID = RxTextView.textChanges(inputDataField[0])
                 .map { t -> t.length in 1..7 }
                 .subscribe({ it ->
                     isCheckID = false
                     reactiveInputTextViewData(0, !it)
-                })
+                }){
+                    //Error Block
+                    settingEmptyInputUI(0)
+                }
 
         // Password
-        RxTextView.textChanges(inputDataField[1])
+        val disposablePwd = RxTextView.textChanges(inputDataField[1])
                 .map { t -> t.isEmpty() || Pattern.matches(Constants.PASSWORD_RULS, t) }
                 .subscribe({ it ->
                     inputDataField[2].setText("")
                     reactiveInputTextViewData(1, it)
-                })
+                }){
+                    //Error Block
+                }
 
         // RePassword
-        RxTextView.textChanges(inputDataField[2])
+        val disposableRePwd = RxTextView.textChanges(inputDataField[2])
                 .map { t -> t.isEmpty() || inputDataField[1].text.toString() == inputDataField[2].text.toString() }
                 .subscribe({ it ->
                     reactiveInputTextViewData(2, it)
-                })
+                }){
+                    //Error Block
+                }
 
 
         //Email
-        RxTextView.textChanges(inputDataField[3])
+        val disposableEmail = RxTextView.textChanges(inputDataField[3])
                 .map { t -> t.isEmpty() || Pattern.matches(Constants.EMAIL_RULS, t) }
                 .subscribe({
                     reactiveInputTextViewData(3, it)
-                })
+                }){
+                    //Error Block
+                }
 
+        viewDisposables.addAll(disposableID, disposablePwd, disposableRePwd, disposableEmail)
+    }
+
+    private fun settingEmptyInputUI(indexPath: Int){
+        isInputCorrectData[indexPath] = false
+        textInputLayoutArray[indexPath].isErrorEnabled = false
     }
 
     var isSuccess = false
@@ -191,5 +209,10 @@ class JoinActivity : AppCompatActivity() {
         fun newIntent(context: Context): Intent {
             return Intent(context, JoinActivity::class.java)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewDisposables.clear()
     }
 }
