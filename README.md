@@ -1,4 +1,4 @@
-# Sample Login for Kotlin
+# 샘플 로그인 페이지 만들기
 
 `코틀린` , `RxJava`, `Realm` 으로 개발한 간단한 로그인 프로젝트 입니다.
 
@@ -44,9 +44,15 @@
 
 ## 관련 소스
 
-#### 1.Android Support Degin 을 활용한 화면 구성
+`로그인`, `회원가입` 을 구성하는데 사용한 오픈소스와 함께 코틀린 문법을 간단히 소개하겠습니다.
+
+### 1. Android Support Degin 을 활용한 화면 구성
 
 `android.support.design.widget.TextInputLayout` 을 활용하여 Input Text 화면 구성하였습니다. 
+
+실행 화면을 보시면 `회원가입` 에서 아이디, 비밀번호 입력을 시도하면 Input Text 화면이 변경되는 것을 확인할 수 있습니다. 이처럼 기존의 EditText Widget 의 디자인을 깔끔하고 다양하게 표현할 수 있도록 도와줍니다. 특히 Android Support Degin은 Rx을 활용하면 그 영향력은 파격적입니다.
+
+<br/>
 
 ##### activity_siginup_degin.xml
 
@@ -165,3 +171,52 @@
         android:text="@string/join_done" />
 </LinearLayout>
 ```
+
+<br/>
+
+### 2. RxJava, RxBinding을 활용한 회원가입 페이지 만들기
+
+> **Rx란?**
+>
+> 'Reactive Extensions'이며 'ReactiveX'라고도 불립니다. 
+>
+> 이벤트를 이벤트 스트림에 전달하고, 이벤트 스트림을 관찰하다가 원하는 이벤트를 감지하면 이에 따른 동작을 수행합니다. 비동기 라이브러리로 반응하는 프로그램이라고하여 **Reactive Programming**으로 부릅니다.
+
+ Rx을 알기 위해서는 옵서버블(Observable)와 옵서버(Observer) 개념을 알고 있어야 합니다.
+
+#### **옵서버블(Observable)**
+
+"이벤트"를 만들어 내는(emit) 주체로, "이벤트 스트림"을 통해 만든 이벤트를 보냅니다. 한개부터 여러개까지 생성 가능하며, 특정 조건을 만족 시 이벤트를 만들어 내지 않을 수도 있으며, 유지하여 계속해서 이벤트를 만들 수도 있습니다.
+
+#### **옵서버(Observer)**
+
+옵서버블에 만들어진 이벤트에 "반응(react)"합니다. 이벤트를 받았을 때 수행할 작업을 정의합니다. 반응을 하기 위해서 지속적으로 옵서버블을 관찰해야하는데 이를 '옵서버가 옵서버블을 "구독(subscribe)"다'라고 표현합니다.
+
+![img](https://t1.daumcdn.net/cfile/tistory/99E021465B18F37915)
+
+#### 연산자(Operators)
+
+이벤트 스트림을 통해 전달되는 이벤트를 변환 합니다. 갖고있는 값 변경 뿐 아니라 특정 조건을 만족하는 이벤트만 이벤트 스트림에 흘려 보내거나 이벤트 개수를 바꿔주는 등 다양한 작업을 수행할 수 있습니다. 
+Rx에서 제공하는 Operators 를 확인하려면 [여기](http://reactivex.io/documentation/operators.html) 를 눌러주세요. 한국어로 번역도 되어 있네요. 
+
+![img](https://t1.daumcdn.net/cfile/tistory/99790B455B18F38419)
+
+> **연산자 체인**
+>
+> 거의 모든 연산자들은 Observable 상에서 동작하고 Observable을 리턴합니다. 이 접근 방법은 연산자들을 연달아 호출 할 수 있는 연산자 체인을 제공합니다. 연산자 체인에서 각각의 연산자는 이전 연산자가 리턴한 Observable을 기반으로 동작하며 동작에 따라 Observable을 변경합니다. Observable의 연산자 체인은 원본 Observable과 독립적으로 실행될 수 없고 *순서대로* 실행되어야 한다
+
+#### 스케줄러(Scheduler)
+
+스케줄러(Scheduler)는 작업을 수행할 스레드(thread)를 지정 합니다. 다양한 스레드를 지정할 수 있으며 Android에서 UI 업데이트하는 메인 스레드도 사용 가능합니다. 스케줄러는 observeOn() 메서드를 사용하여 지정합니다. 
+
+> **스케줄러 호출 시점**
+> 1) observeOn() 메서드 호출한 직후에 오는 연산자 
+> 2) 옵서버에서 수행되는 작업 앞의 observeOn() 메서드에서 지정한 스레드
+
+#### 디스포저블(Disposable) 
+
+옵서버가 옵서버블을 구독할 때 생성되는 객체로, 옵서버블에서 만드는 이벤트 스트림과 이에 필요한 리소스를 관리합니다. 한가지 예로써 구독 해제(unsubscribe)을 말할 수 있습니다.  디스포저블을 통하여 구독 해제한 경우 옵서버블은 이를 감지하여 유지하고 있던 리소스를 해제합니다.
+
+#### 컴포지트 디스포저블(Composite Disposable)
+
+Composite Disposable을 사용하여 여러 개의 디스포저블 객체를 하나의 객체에서 사용 가능합니다. Android에서 View에 해당되는 액티비티나 프래그먼트에서 사용한다면 리소스 관리에 도움이 될 것입니다.
