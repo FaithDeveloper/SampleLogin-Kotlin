@@ -2,6 +2,8 @@
 
 `코틀린` , `RxJava`, `Realm` 으로 개발한 간단한 로그인 프로젝트 입니다.
 
+<br/>
+
 ## 요구사항
 
 ```
@@ -38,9 +40,13 @@
  - android.support:design 을 활용하여 로그인, 회원가입 UI을 구성한다.
 ```
 
+<br/>
+
 ## 실행화면
 
 <img src="https://github.com/FaithDeveloper/SampleLogin-Kotlin/blob/master/raw/master/sample_login_20180531.gif" data-canonical-src="https://github.com/FaithDeveloper/SampleLogin-Kotlin/blob/master/raw/master/sample_login_20180531.gif" width="300" height="533" />
+
+<br/>
 
 ## 관련 소스
 
@@ -93,82 +99,7 @@
             android:maxLines="1"
             android:textColor="@color/white" />
     </android.support.design.widget.TextInputLayout>
-
-    <!-- 아이디 중복 확인 UI 구성 -->
-    <Button
-        android:id="@+id/btnCheckExistID"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_gravity="center_vertical|right"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/round_green"
-        android:text="중복체크"
-        android:textColor="@color/white" />
-
-    <!-- 패스워드 UI 구성 -->
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/editPWDLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/pwd"
-        android:textColorHint="@color/white">
-
-        <EditText
-            android:id="@+id/editPWD"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/white"
-            android:inputType="textPassword"
-            android:maxLength="20"
-            android:maxLines="1"
-            android:textColor="@color/white" />
-    </android.support.design.widget.TextInputLayout>
-
-    <!-- 패스워드 확인 UI 구성 -->
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/editPWDConfirmLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/pwd_confirm"
-        android:textColorHint="@color/white">
-
-        <EditText
-            android:id="@+id/editPWDConfirm"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/white"
-            android:inputType="textPassword"
-            android:maxLength="20"
-            android:maxLines="1"
-            android:textColor="@color/white" />
-    </android.support.design.widget.TextInputLayout>
-
-    <!-- 이메일 입력 UI 구성 -->
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/editEmailLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/email"
-        android:textColorHint="@color/white">
-
-        <EditText
-            android:id="@+id/editEmail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/white"
-            android:inputType="textEmailAddress"
-            android:maxLength="20"
-            android:maxLines="1"
-            android:textColor="@color/white" />
-    </android.support.design.widget.TextInputLayout>
-
-    <!-- 회원가입 버튼 -->
-    <Button
-        android:id="@+id/btnDone"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/join_done" />
+    <!-- 생략...-->
 </LinearLayout>
 ```
 
